@@ -1,42 +1,78 @@
-// You can edit ALL of the code here
-
 // Runs when the page loads
 function setup() {
-  const allEpisodes = getAllEpisodes(); // array of episode objects
-  makePageForEpisodes(allEpisodes);
-}
+  const allEpisodes = getAllEpisodes(); // get the full list once
 
-// Turn season + episode number into S01E01, S02E07, etc.
-function formatEpisodeCode(episode) {
-  const seasonPadded = String(episode.season).padStart(2, "0");
-  const numberPadded = String(episode.number).padStart(2, "0");
-  return `S${seasonPadded}E${numberPadded}`;
-}
-
-// Build the page using the episode list
-function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
-  rootElem.innerHTML = ""; // clear whatever was there
+  rootElem.innerHTML = ""; // start clean
 
-  // --- Page title and count ---
+  // --- Search bar (created once) ---
+  const searchWrapper = document.createElement("div");
+  searchWrapper.id = "search-wrapper";
+
+  const searchLabel = document.createElement("label");
+  searchLabel.htmlFor = "search-input";
+  searchLabel.textContent = "Search episodes: ";
+  searchWrapper.appendChild(searchLabel);
+
+  const searchInput = document.createElement("input");
+  searchInput.type = "text";
+  searchInput.id = "search-input";
+  searchInput.placeholder = "Type to search by name or summary...";
+  searchWrapper.appendChild(searchInput);
+
+  rootElem.appendChild(searchWrapper);
+
+  // --- Page title and count (created once) ---
   const heading = document.createElement("h1");
   heading.textContent = "TV Show Episodes";
   rootElem.appendChild(heading);
 
   const countP = document.createElement("p");
-  countP.textContent = `Displaying ${episodeList.length} episode(s)`;
+  countP.id = "episode-count";
   rootElem.appendChild(countP);
 
-  // --- Container for all episode cards ---
+  // --- Container for all episode cards (created once) ---
   const episodesContainer = document.createElement("section");
   episodesContainer.id = "episodes-container";
   rootElem.appendChild(episodesContainer);
 
-  // --- One card per episode ---
-  episodeList.forEach((episode) => {
-    // This "episode" is like the object you pasted:
-    // { id, url, name, season, number, airdate, airtime, airstamp, runtime, image, summary, _links }
+  // initial render (show all)
+  renderEpisodes(allEpisodes, countP, episodesContainer);
 
+  // --- Live search: update immediately on each keystroke ---
+  searchInput.addEventListener("input", () => {
+    const searchTerm = searchInput.value.trim().toLowerCase();
+
+    // If search is empty, show all episodes
+    if (searchTerm === "") {
+      renderEpisodes(allEpisodes, countP, episodesContainer);
+      return;
+    }
+
+    const filteredEpisodes = allEpisodes.filter((ep) => {
+      const name = (ep.name || "").toLowerCase();
+
+      // summary from TVMaze often contains HTML. Strip tags then compare.
+      const rawSummary = ep.summary || "";
+      const summaryText = rawSummary.replace(/<[^>]*>/g, "").toLowerCase();
+
+      return name.includes(searchTerm) || summaryText.includes(searchTerm);
+    });
+
+    renderEpisodes(filteredEpisodes, countP, episodesContainer);
+  });
+}
+
+// Render a list of episodes into the provided container and update count
+function renderEpisodes(episodeList, countElement, containerElement) {
+  // Update count
+  countElement.textContent = `Displaying ${episodeList.length} episode(s)`;
+
+  // Clear container
+  containerElement.innerHTML = "";
+
+  // Build episode cards
+  episodeList.forEach((episode) => {
     const card = document.createElement("article");
     card.className = "episode-card";
 
@@ -46,7 +82,7 @@ function makePageForEpisodes(episodeList) {
     title.textContent = `${episode.name} - ${code}`;
     card.appendChild(title);
 
-    // Season + episode number text (optional but clear)
+    // Season + episode number text
     const info = document.createElement("p");
     info.textContent = `Season ${episode.season}, Episode ${episode.number}`;
     card.appendChild(info);
@@ -77,14 +113,27 @@ function makePageForEpisodes(episodeList) {
       card.appendChild(link);
     }
 
-    episodesContainer.appendChild(card);
+    containerElement.appendChild(card);
   });
 
-  // --- TVMaze credit (licensing requirement) ---
-  const creditP = document.createElement("p");
-  creditP.innerHTML =
-    'This page uses data from <a href="https://www.tvmaze.com/" target="_blank" rel="noopener noreferrer">TVMaze.com</a>.';
-  rootElem.appendChild(creditP);
+  // Ensure TVMaze credit exists (only one)
+  // We'll put it after the container if not already present
+  let creditP = document.getElementById("tvmaze-credit");
+  if (!creditP) {
+    creditP = document.createElement("p");
+    creditP.id = "tvmaze-credit";
+    creditP.innerHTML =
+      'This page uses data from <a href="https://www.tvmaze.com/" target="_blank" rel="noopener noreferrer">TVMaze.com</a>.';
+    // append after the container
+    containerElement.parentNode.appendChild(creditP);
+  }
+}
+
+// Turn season + episode number into S01E01, S02E07, etc.
+function formatEpisodeCode(episode) {
+  const seasonPadded = String(episode.season).padStart(2, "0");
+  const numberPadded = String(episode.number).padStart(2, "0");
+  return `S${seasonPadded}E${numberPadded}`;
 }
 
 window.onload = setup;
