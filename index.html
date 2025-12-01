@@ -10,14 +10,49 @@
 </head>
 
 <body>
-  <div id="root">
-  </div>
+ <body>
+  <!-- Top controls: search + dropdown + count -->
+  <section id="controls">
+    <label for="searchInput">Search episodes:</label>
+    <input
+      id="searchInput"
+      type="text"
+      placeholder="Type to search name or summary…"
+    />
 
-  <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
-  <script src="episodes.js"></script>
+    <label for="episodeSelect">Go to episode:</label>
+    <select id="episodeSelect"></select>
 
-  <!-- Loads YOUR javascript code -->
+    <span id="searchCount"></span>
+  </section>
+
+  <!-- Where all the episode cards OR messages will be rendered -->
+  <div id="root"></div>
+
   <script src="script.js"></script>
+</body>
+<body>
+  <!-- Top controls: search + dropdown + count -->
+  <section id="controls">
+    <label for="searchInput">Search episodes:</label>
+    <input
+      id="searchInput"
+      type="text"
+      placeholder="Type to search name or summary…"
+    />
+
+    <label for="episodeSelect">Go to episode:</label>
+    <select id="episodeSelect"></select>
+
+    <span id="searchCount"></span>
+  </section>
+
+  <!-- Where all the episode cards OR messages will be rendered -->
+  <div id="root"></div>
+
+  <script src="script.js"></script>
+</body>
+
 </body>
 
 </html>
