@@ -1,32 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>TV Show Browser</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TV Show Project | Sophia (saff-coder)</title>
+  <body>
+    <!-- Top navigation -->
+    <header id="topNav">
+      <a href="#" id="backToShows" style="display: none">
+        ← Back to shows listing
+      </a>
+    </header>
 
-  <!-- Stylesheet -->
-  <link href="style.css" rel="stylesheet" />
+    <!-- 🔹 Shows listing view (front page) -->
+   <section id="showsView">
+  <div id="showControls">
+    <label for="showSearchInput">Search shows:</label>
+    <input
+      id="showSearchInput"
+      type="text"
+      placeholder="Type to search name, genres or summary…"
+    />
 
-  <!-- Favicon -->
-  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-</head>
+    <!-- ⭐ NEW: dropdown for selecting a show -->
+    <label for="showSelect">Select show:</label>
+    <select id="showSelect">
+      <option value="">Select a show...</option>
+    </select>
 
-<body>
-  <!-- Root container where the entire app is rendered -->
-  <div id="root"></div>
+    <span id="showCount"></span>
+  </div>
 
-  <!--
-    IMPORTANT:
-    episodes.js is no longer needed for Level 400 because
-    we fetch show episodes dynamically from the API.
-    BUT if your teacher requires you to keep it, leave this line
-  -->
-  <!-- <script src="episodes.js"></script> -->
+  <!-- Grid of show cards -->
+  <div id="showsRoot"></div>
+</section>
 
-  <!-- Your application logic -->
-  <script src="script.js"></script>
-</body>
 
+    <!-- 🔹 Episodes view (for a single show) -->
+    <section id="episodesView" style="display: none">
+      <section id="controls">
+        <h2 id="currentShowTitle">Episodes</h2>
+
+        <label for="searchInput">Search episodes:</label>
+        <input
+          id="searchInput"
+          type="text"
+          placeholder="Type to search name or summary…"
+        />
+
+        <label for="episodeSelect">Go to episode:</label>
+        <select id="episodeSelect"></select>
+
+        <span id="searchCount"></span>
+      </section>
+
+      <!-- Grid of episode cards -->
+      <div id="root"></div>
+    </section>
+
+    <!-- JS (no episodes.js anymore) -->
+    <script src="script.js"></script>
+  
+
+  </body>
 </html>
