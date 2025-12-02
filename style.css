@@ -28,7 +28,7 @@ body {
   text-decoration: underline;
 }
 
-/* 🔹 Controls for shows & episodes */
+/* Controls for shows & episodes */
 #controls,
 #showControls {
   display: flex;
@@ -82,7 +82,7 @@ body {
   color: #666;
 }
 
-/* 🔹 Grids for shows and episodes */
+/* Grids for shows and episodes */
 #root,
 #showsRoot {
   display: grid;
@@ -141,7 +141,7 @@ body {
   text-decoration: underline;
 }
 
-/* 🔹 Show cards */
+/* Show cards */
 .show-card {
   cursor: pointer;
 }
@@ -215,14 +215,5 @@ body {
     font-size: 1rem;
   }
 }
-.status-message {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 40px 0;
-  font-size: 1rem;
-  color: #555;
-}
 
-.status-message.error {
-  color: #b00020;
-}
+
