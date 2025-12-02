@@ -17,28 +17,27 @@
     </header>
 
     <!-- 🔹 Shows listing view (front page) -->
-   <section id="showsView">
-  <div id="showControls">
-    <label for="showSearchInput">Search shows:</label>
-    <input
-      id="showSearchInput"
-      type="text"
-      placeholder="Type to search name, genres or summary…"
-    />
+    <section id="showsView">
+      <div id="showControls">
+        <label for="showSearchInput">Search shows:</label>
+        <input
+          id="showSearchInput"
+          type="text"
+          placeholder="Type to search name, genres or summary…"
+        />
 
-    <!-- ⭐ NEW: dropdown for selecting a show -->
-    <label for="showSelect">Select show:</label>
-    <select id="showSelect">
-      <option value="">Select a show...</option>
-    </select>
+        <!-- ⭐ Dropdown for selecting a show -->
+        <label for="showSelect">Select show:</label>
+        <select id="showSelect">
+          <option value="">Select a show...</option>
+        </select>
 
-    <span id="showCount"></span>
-  </div>
+        <span id="showCount"></span>
+      </div>
 
-  <!-- Grid of show cards -->
-  <div id="showsRoot"></div>
-</section>
-
+      <!-- Grid of show cards -->
+      <div id="showsRoot"></div>
+    </section>
 
     <!-- 🔹 Episodes view (for a single show) -->
     <section id="episodesView" style="display: none">
@@ -64,7 +63,5 @@
 
     <!-- JS (no episodes.js anymore) -->
     <script src="script.js"></script>
-  
-
   </body>
 </html>
