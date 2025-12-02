@@ -99,9 +99,7 @@ function renderShowsList(showsToRender) {
     metaDiv.className = "show-meta";
 
     const genresText =
-      show.genres && show.genres.length > 0
-        ? show.genres.join(", ")
-        : "None";
+      show.genres && show.genres.length > 0 ? show.genres.join(", ") : "None";
     const statusText = show.status || "Unknown";
     const ratingText =
       show.rating && show.rating.average != null
